@@ -15,7 +15,8 @@
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "prepare": "husky || exit 0",
-    "prepack": "pnpm run build"
+    "prepack": "pnpm run build",
+    "release": "node -e \"console.log(process.platform === 'win32' ? 'pwsh ./scripts/release.ps1' : 'bash ./scripts/release.sh')\""
   },
   "keywords": [
     "mcp",
