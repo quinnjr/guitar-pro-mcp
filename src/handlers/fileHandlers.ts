@@ -19,7 +19,7 @@ export function getDefaultOutputDirectory(): string {
   return join(home, 'Music');
 }
 
-interface CreateGuitarProFileArgs {
+export interface CreateGuitarProFileArgs {
   filename: string;
   outputDirectory?: string;
   title: string;
@@ -127,11 +127,20 @@ export async function createGuitarProFile(
   return { filepath, song };
 }
 
+export interface CreateSimpleGuitarProFileArgs {
+  filename: string;
+  outputDirectory?: string;
+  title: string;
+  artist?: string;
+  tempo?: number;
+  tablature: string[];
+}
+
 /**
  * Create a simple Guitar Pro file with basic tablature notation
  */
 export async function createSimpleGuitarProFile(
-  args: any
+  args: CreateSimpleGuitarProFileArgs
 ): Promise<{ filepath: string; song: any }> {
   const { filename, outputDirectory, title, artist, tempo = 120, tablature } = args;
 

@@ -11,6 +11,8 @@ import {
   getDefaultOutputDirectory,
   createGuitarProFile,
   createSimpleGuitarProFile,
+  type CreateGuitarProFileArgs,
+  type CreateSimpleGuitarProFileArgs,
 } from './handlers/fileHandlers.js';
 
 const server = new Server(
@@ -242,9 +244,9 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   const { name, arguments: args } = request.params;
 
   if (name === 'create_guitar_pro_file') {
-    return await handleCreateGuitarProFile(args);
+    return await handleCreateGuitarProFile(args || {});
   } else if (name === 'create_simple_guitar_pro_file') {
-    return await handleCreateSimpleGuitarProFile(args);
+    return await handleCreateSimpleGuitarProFile(args || {});
   }
 
   throw new Error(`Unknown tool: ${name}`);
@@ -253,9 +255,11 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 /**
  * Handle create_guitar_pro_file tool
  */
-async function handleCreateGuitarProFile(args: Record<string, any>) {
+async function handleCreateGuitarProFile(args: Record<string, unknown>) {
   try {
-    const { filepath, song } = await createGuitarProFile(args);
+    const { filepath, song } = await createGuitarProFile(
+      args as unknown as CreateGuitarProFileArgs
+    );
 
     return {
       content: [
@@ -281,9 +285,11 @@ async function handleCreateGuitarProFile(args: Record<string, any>) {
 /**
  * Handle create_simple_guitar_pro_file tool
  */
-async function handleCreateSimpleGuitarProFile(args: Record<string, any>) {
+async function handleCreateSimpleGuitarProFile(args: Record<string, unknown>) {
   try {
-    const { filepath, song } = await createSimpleGuitarProFile(args);
+    const { filepath, song } = await createSimpleGuitarProFile(
+      args as unknown as CreateSimpleGuitarProFileArgs
+    );
 
     return {
       content: [
