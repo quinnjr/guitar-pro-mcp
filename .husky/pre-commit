@@ -1,0 +1,18 @@
+# Get current branch name
+current_branch=$(git symbolic-ref --short HEAD 2>/dev/null)
+
+# Check if committing directly to main or develop
+if [ "$current_branch" = "main" ] || [ "$current_branch" = "develop" ]; then
+  echo "❌ ERROR: Direct commits to '$current_branch' branch are not allowed!"
+  echo ""
+  echo "Please create a feature/bugfix/hotfix branch instead:"
+  echo "  git checkout -b feature/my-feature"
+  echo "  git checkout -b bugfix/my-bugfix"
+  echo "  git checkout -b hotfix/my-hotfix"
+  echo ""
+  echo "Then make your changes and commit to that branch."
+  exit 1
+fi
+
+echo "✅ Branch check passed: committing to '$current_branch'"
+

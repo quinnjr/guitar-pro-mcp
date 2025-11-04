@@ -1,0 +1,31 @@
+# Read commit message
+commit_msg=$(cat "$1")
+
+# Check if commit message follows conventional commits format
+if ! echo "$commit_msg" | grep -qE "^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\(.+\))?: .{1,}"; then
+  echo "❌ ERROR: Commit message does not follow Conventional Commits format!"
+  echo ""
+  echo "Format: <type>[optional scope]: <description>"
+  echo ""
+  echo "Types:"
+  echo "  feat:     A new feature"
+  echo "  fix:      A bug fix"
+  echo "  docs:     Documentation only changes"
+  echo "  style:    Code style changes (formatting, etc.)"
+  echo "  refactor: Code refactoring"
+  echo "  perf:     Performance improvements"
+  echo "  test:     Adding or updating tests"
+  echo "  build:    Build system changes"
+  echo "  ci:       CI/CD changes"
+  echo "  chore:    Other changes"
+  echo ""
+  echo "Examples:"
+  echo "  feat: add support for Guitar Pro 7 files"
+  echo "  fix(parser): handle empty measures correctly"
+  echo "  docs: update README with new examples"
+  echo ""
+  exit 1
+fi
+
+echo "✅ Commit message format is valid"
+

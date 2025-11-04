@@ -1,0 +1,54 @@
+# Source files (we ship the built version)
+src/
+tests/
+
+# Build and development files
+*.mjs
+tsconfig.json
+vitest.config.ts
+eslint.config.js
+.prettierrc
+.prettierignore
+
+# Git and version control
+.git/
+.gitignore
+.husky/
+
+# CI/CD
+.github/
+
+# Coverage and test reports
+coverage/
+*.log
+.nyc_output/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+
+# Documentation (keep README.md, exclude others)
+docs/
+
+# Package manager files
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
+
+# Only include what's needed for production:
+# - build/ (the compiled code)
+# - package.json
+# - README.md
+# - LICENSE
+

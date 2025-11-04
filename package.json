@@ -1,0 +1,53 @@
+{
+  "name": "guitar-pro-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for generating Guitar Pro 6 files",
+  "main": "build/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "prepare": "husky || exit 0",
+    "prepack": "pnpm run build"
+  },
+  "keywords": [
+    "mcp",
+    "guitar-pro",
+    "music",
+    "tablature"
+  ],
+  "author": "quinnjr",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quinnjr/guitar-pro-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/quinnjr/guitar-pro-mcp/issues"
+  },
+  "homepage": "https://github.com/quinnjr/guitar-pro-mcp#readme",
+  "packageManager": "pnpm@10.19.0",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/node": "^22.9.3",
+    "@typescript-eslint/eslint-plugin": "^8.18.2",
+    "@typescript-eslint/parser": "^8.18.2",
+    "@vitest/coverage-v8": "^2.1.5",
+    "esbuild": "^0.24.0",
+    "eslint": "^9.17.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "husky": "^9.1.7",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.46.3",
+    "vitest": "^2.1.5"
+  }
+}
