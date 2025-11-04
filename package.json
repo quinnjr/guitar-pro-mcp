@@ -1,6 +1,6 @@
 {
   "name": "guitar-pro-mcp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "MCP server for generating Guitar Pro 6 files",
   "main": "build/index.js",
   "type": "module",
