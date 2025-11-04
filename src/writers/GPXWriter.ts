@@ -7,9 +7,9 @@ import { Duration } from '../models/Beat.js';
 import type { Note } from '../models/Note.js';
 
 /**
- * Guitar Pro 6 file writer
+ * Guitar Pro 6+ (.gpx) file writer
  */
-export class GP6Writer {
+export class GPXWriter {
   private writer: BinaryWriter;
 
   constructor() {
@@ -17,7 +17,7 @@ export class GP6Writer {
   }
 
   /**
-   * Write a complete Guitar Pro 6 file
+   * Write a complete Guitar Pro file (.gpx format)
    */
   write(song: Song): Buffer {
     this.writeHeader();
@@ -29,10 +29,10 @@ export class GP6Writer {
   }
 
   /**
-   * Write the GP6 file header
+   * Write the GPX file header
    */
   private writeHeader(): void {
-    // GP6 magic number/identifier
+    // GPX magic number/identifier
     this.writer.writeFixedString('FICHIER GUITAR PRO v6', 31);
     this.writer.writeInt(6); // Version
   }
@@ -292,9 +292,9 @@ export class GP6Writer {
 }
 
 /**
- * Convenience function to write a song to a buffer
+ * Convenience function to write a song to a GPX buffer
  */
-export function writeGP6File(song: Song): Buffer {
-  const writer = new GP6Writer();
+export function writeGPXFile(song: Song): Buffer {
+  const writer = new GPXWriter();
   return writer.write(song);
 }
