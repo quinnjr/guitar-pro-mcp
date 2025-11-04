@@ -12,6 +12,9 @@ const buildOptions = {
   format: 'esm',
   sourcemap: true,
   external: ['@modelcontextprotocol/sdk'],
+  banner: {
+    js: '#!/usr/bin/env node',
+  },
 };
 
 if (isWatch) {
