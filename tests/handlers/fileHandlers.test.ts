@@ -12,8 +12,10 @@ describe('File Handlers', () => {
   let testDir: string;
 
   beforeEach(async () => {
-    testDir = join(tmpdir(), `guitar-pro-test-${Date.now()}`);
+    testDir = join(tmpdir(), `guitar-pro-test-${Date.now()}-${Math.random().toString(36).slice(2)}`);
     await fs.mkdir(testDir, { recursive: true });
+    // Ensure directory is writable
+    await fs.access(testDir, fs.constants.W_OK);
   });
 
   afterEach(async () => {
