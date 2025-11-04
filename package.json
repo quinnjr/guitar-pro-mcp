@@ -4,6 +4,9 @@
   "description": "MCP server for generating Guitar Pro 6 files",
   "main": "build/index.js",
   "type": "module",
+  "bin": {
+    "guitar-pro-mcp": "build/index.js"
+  },
   "scripts": {
     "build": "node build.mjs",
     "test": "vitest run",
