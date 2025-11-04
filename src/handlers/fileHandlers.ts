@@ -1,5 +1,5 @@
 import { promises as fs } from 'fs';
-import { homedir } from 'os';
+import { homedir, platform } from 'os';
 import { join } from 'path';
 import { createSong, addTrackToSong, setTempo as setSongTempo } from '../models/Song.js';
 import { createTrack, addMeasureToTrack, setTuning } from '../models/Track.js';
@@ -9,12 +9,29 @@ import { createNote } from '../models/Note.js';
 import { writeGP6File } from '../writers/GP6Writer.js';
 
 /**
- * Get the default output directory (Music folder on Windows/Mac)
+ * Get the default output directory for Guitar Pro files
+ * @returns The platform-appropriate Music directory path
+ *
+ * Platform-specific paths:
+ * - Windows: %USERPROFILE%\Music (e.g., C:\Users\username\Music)
+ * - macOS: ~/Music (e.g., /Users/username/Music)
+ * - Linux: $XDG_MUSIC_DIR or ~/Music (e.g., /home/username/Music)
  */
 export function getDefaultOutputDirectory(): string {
   const home = homedir();
+  const currentPlatform = platform();
+
+  // Linux: Check XDG_MUSIC_DIR environment variable first
+  if (currentPlatform === 'linux') {
+    const xdgMusicDir = process.env.XDG_MUSIC_DIR;
+    if (xdgMusicDir) {
+      return xdgMusicDir;
+    }
+  }
+
+  // Windows, macOS, and Linux fallback: use ~/Music
   // Windows: C:\Users\<username>\Music
-  // Mac: /Users/<username>/Music
+  // macOS: /Users/<username>/Music
   // Linux: /home/<username>/Music
   return join(home, 'Music');
 }
