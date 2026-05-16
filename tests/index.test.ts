@@ -9,7 +9,7 @@ import { createTrack, addMeasureToTrack } from '../src/models/Track';
 import { createMeasure, addBeatToMeasure, setTimeSignature } from '../src/models/Measure';
 import { createBeat, addNoteToBeat, Duration } from '../src/models/Beat';
 import { createNote } from '../src/models/Note';
-import { writeGP6File } from '../src/writers/GP6Writer';
+import { writeGPXFile } from '../src/writers/GPXWriter';
 
 describe('MCP Server Functions', () => {
   let testDir: string;
@@ -58,8 +58,8 @@ describe('MCP Server Functions', () => {
       song = addTrackToSong(song, track);
 
       // Write the file
-      const buffer = writeGP6File(song);
-      const filepath = join(testDir, 'test-song.gp6');
+      const buffer = writeGPXFile(song);
+      const filepath = join(testDir, 'test-song.gpx');
       await fs.writeFile(filepath, buffer);
 
       // Verify file exists and has content
@@ -90,8 +90,8 @@ describe('MCP Server Functions', () => {
       song = addTrackToSong(song, guitar);
       song = addTrackToSong(song, bass);
 
-      const buffer = writeGP6File(song);
-      const filepath = join(testDir, 'multi-track.gp6');
+      const buffer = writeGPXFile(song);
+      const filepath = join(testDir, 'multi-track.gpx');
       await fs.writeFile(filepath, buffer);
 
       const stats = await fs.stat(filepath);
@@ -123,8 +123,8 @@ describe('MCP Server Functions', () => {
 
       song = addTrackToSong(song, track);
 
-      const buffer = writeGP6File(song);
-      const filepath = join(testDir, 'complex.gp6');
+      const buffer = writeGPXFile(song);
+      const filepath = join(testDir, 'complex.gpx');
       await fs.writeFile(filepath, buffer);
 
       const stats = await fs.stat(filepath);
@@ -153,8 +153,8 @@ describe('MCP Server Functions', () => {
       track = addMeasureToTrack(track, measure);
       song = addTrackToSong(song, track);
 
-      const buffer = writeGP6File(song);
-      const filepath = join(testDir, 'durations.gp6');
+      const buffer = writeGPXFile(song);
+      const filepath = join(testDir, 'durations.gpx');
       await fs.writeFile(filepath, buffer);
 
       const stats = await fs.stat(filepath);
@@ -164,8 +164,8 @@ describe('MCP Server Functions', () => {
     it('should handle empty songs', async () => {
       const song = createSong('Empty Song');
 
-      const buffer = writeGP6File(song);
-      const filepath = join(testDir, 'empty.gp6');
+      const buffer = writeGPXFile(song);
+      const filepath = join(testDir, 'empty.gpx');
       await fs.writeFile(filepath, buffer);
 
       const stats = await fs.stat(filepath);
@@ -195,8 +195,8 @@ describe('MCP Server Functions', () => {
       track = addMeasureToTrack(track, measure);
       song = addTrackToSong(song, track);
 
-      const buffer = writeGP6File(song);
-      const filepath = join(testDir, 'rests.gp6');
+      const buffer = writeGPXFile(song);
+      const filepath = join(testDir, 'rests.gpx');
       await fs.writeFile(filepath, buffer);
 
       const stats = await fs.stat(filepath);
@@ -216,8 +216,8 @@ describe('MCP Server Functions', () => {
       track = addMeasureToTrack(track, measure);
       song = addTrackToSong(song, track);
 
-      const buffer = writeGP6File(song);
-      const filepath = join(testDir, 'dotted.gp6');
+      const buffer = writeGPXFile(song);
+      const filepath = join(testDir, 'dotted.gpx');
       await fs.writeFile(filepath, buffer);
 
       const stats = await fs.stat(filepath);
@@ -240,8 +240,8 @@ describe('MCP Server Functions', () => {
       track = addMeasureToTrack(track, measure);
       song = addTrackToSong(song, track);
 
-      const buffer = writeGP6File(song);
-      const filepath = join(testDir, 'effects.gp6');
+      const buffer = writeGPXFile(song);
+      const filepath = join(testDir, 'effects.gpx');
       await fs.writeFile(filepath, buffer);
 
       const stats = await fs.stat(filepath);
@@ -255,25 +255,25 @@ describe('MCP Server Functions', () => {
       await fs.mkdir(nestedDir, { recursive: true });
 
       const song = createSong('Test');
-      const buffer = writeGP6File(song);
-      const filepath = join(nestedDir, 'test.gp6');
+      const buffer = writeGPXFile(song);
+      const filepath = join(nestedDir, 'test.gpx');
       await fs.writeFile(filepath, buffer);
 
       const stats = await fs.stat(filepath);
       expect(stats.isFile()).toBe(true);
     });
 
-    it('should handle filenames with and without .gp6 extension', async () => {
+    it('should handle filenames with and without .gpx extension', async () => {
       const song = createSong('Test');
-      const buffer = writeGP6File(song);
+      const buffer = writeGPXFile(song);
 
       // Without extension
-      const filepath1 = join(testDir, 'test1.gp6');
+      const filepath1 = join(testDir, 'test1.gpx');
       await fs.writeFile(filepath1, buffer);
       expect((await fs.stat(filepath1)).isFile()).toBe(true);
 
       // With extension already
-      const filepath2 = join(testDir, 'test2.gp6');
+      const filepath2 = join(testDir, 'test2.gpx');
       await fs.writeFile(filepath2, buffer);
       expect((await fs.stat(filepath2)).isFile()).toBe(true);
     });
@@ -324,8 +324,8 @@ describe('MCP Server Functions', () => {
       expect(song.tracks.length).toBe(2);
 
       // Write the complete song
-      const buffer = writeGP6File(song);
-      const filepath = join(testDir, 'workflow.gp6');
+      const buffer = writeGPXFile(song);
+      const filepath = join(testDir, 'workflow.gpx');
       await fs.writeFile(filepath, buffer);
 
       const stats = await fs.stat(filepath);
@@ -336,10 +336,10 @@ describe('MCP Server Functions', () => {
   describe('Error Handling', () => {
     it('should handle invalid file paths gracefully', async () => {
       const song = createSong('Test');
-      const buffer = writeGP6File(song);
+      const buffer = writeGPXFile(song);
 
       // Try to write to an invalid path
-      const invalidPath = join('Z:\\invalid\\path\\test.gp6');
+      const invalidPath = join('Z:\\invalid\\path\\test.gpx');
 
       try {
         await fs.writeFile(invalidPath, buffer);
@@ -371,10 +371,10 @@ describe('MCP Server Functions', () => {
       track = addMeasureToTrack(track, measure);
       song = addTrackToSong(song, track);
 
-      const buffer = writeGP6File(song);
+      const buffer = writeGPXFile(song);
       expect(buffer.length).toBeGreaterThan(0);
 
-      const filepath = join(testDir, 'simple-tab.gp6');
+      const filepath = join(testDir, 'simple-tab.gpx');
       await fs.writeFile(filepath, buffer);
 
       const stats = await fs.stat(filepath);
@@ -403,8 +403,8 @@ describe('MCP Server Functions', () => {
 
       song = addTrackToSong(song, track);
 
-      const buffer = writeGP6File(song);
-      const filepath = join(testDir, 'multi-tab.gp6');
+      const buffer = writeGPXFile(song);
+      const filepath = join(testDir, 'multi-tab.gpx');
       await fs.writeFile(filepath, buffer);
 
       const stats = await fs.stat(filepath);

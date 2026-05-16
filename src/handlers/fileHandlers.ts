@@ -6,7 +6,7 @@ import { createTrack, addMeasureToTrack, setTuning } from '../models/Track.js';
 import { createMeasure, addBeatToMeasure, setTimeSignature } from '../models/Measure.js';
 import { createBeat, addNoteToBeat, Duration } from '../models/Beat.js';
 import { createNote } from '../models/Note.js';
-import { writeGP6File } from '../writers/GP6Writer.js';
+import { writeGPXFile } from '../writers/GPXWriter.js';
 
 /**
  * Get the default output directory (Music folder on Windows/Mac)
@@ -56,8 +56,8 @@ export async function createGuitarProFile(
   // Determine output directory
   const dir = outputDirectory || getDefaultOutputDirectory();
 
-  // Ensure filename has .gp6 extension
-  const finalFilename = filename.endsWith('.gp6') ? filename : `${filename}.gp6`;
+  // Ensure filename has .gpx extension
+  const finalFilename = filename.endsWith('.gpx') ? filename : `${filename}.gpx`;
   const filepath = join(dir, finalFilename);
 
   // Ensure directory exists
@@ -121,7 +121,7 @@ export async function createGuitarProFile(
   }
 
   // Write file
-  const buffer = writeGP6File(song);
+  const buffer = writeGPXFile(song);
   await fs.writeFile(filepath, buffer);
 
   return { filepath, song };
@@ -147,8 +147,8 @@ export async function createSimpleGuitarProFile(
   // Determine output directory
   const dir = outputDirectory || getDefaultOutputDirectory();
 
-  // Ensure filename has .gp6 extension
-  const finalFilename = filename.endsWith('.gp6') ? filename : `${filename}.gp6`;
+  // Ensure filename has .gpx extension
+  const finalFilename = filename.endsWith('.gpx') ? filename : `${filename}.gpx`;
   const filepath = join(dir, finalFilename);
 
   // Ensure directory exists
@@ -181,7 +181,7 @@ export async function createSimpleGuitarProFile(
   song = addTrackToSong(song, track);
 
   // Write file
-  const buffer = writeGP6File(song);
+  const buffer = writeGPXFile(song);
   await fs.writeFile(filepath, buffer);
 
   return { filepath, song };

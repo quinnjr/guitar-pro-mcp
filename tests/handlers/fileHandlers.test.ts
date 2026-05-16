@@ -70,7 +70,7 @@ describe('File Handlers', () => {
 
       const result = await createGuitarProFile(args);
 
-      expect(result.filepath).toContain('test-song.gp6');
+      expect(result.filepath).toContain('test-song.gpx');
       expect(result.song.info.title).toBe('Test Song');
       expect(result.song.info.artist).toBe('Test Artist');
       expect(result.song.tracks.length).toBe(1);
@@ -81,7 +81,7 @@ describe('File Handlers', () => {
       expect(stats.size).toBeGreaterThan(0);
     });
 
-    it('should add .gp6 extension if not provided', async () => {
+    it('should add .gpx extension if not provided', async () => {
       const args = {
         filename: 'test-song-no-ext',
         outputDirectory: testDir,
@@ -91,12 +91,12 @@ describe('File Handlers', () => {
 
       const result = await createGuitarProFile(args);
 
-      expect(result.filepath).toMatch(/\.gp6$/);
+      expect(result.filepath).toMatch(/\.gpx$/);
     });
 
-    it('should not duplicate .gp6 extension', async () => {
+    it('should not duplicate .gpx extension', async () => {
       const args = {
-        filename: 'test-song.gp6',
+        filename: 'test-song.gpx',
         outputDirectory: testDir,
         title: 'Test',
         tracks: [],
@@ -104,8 +104,8 @@ describe('File Handlers', () => {
 
       const result = await createGuitarProFile(args);
 
-      expect(result.filepath).toMatch(/\.gp6$/);
-      expect(result.filepath).not.toMatch(/\.gp6\.gp6$/);
+      expect(result.filepath).toMatch(/\.gpx$/);
+      expect(result.filepath).not.toMatch(/\.gpx\.gpx$/);
     });
 
     it('should use default directory if not provided', async () => {
@@ -338,7 +338,7 @@ describe('File Handlers', () => {
 
       const result = await createSimpleGuitarProFile(args);
 
-      expect(result.filepath).toContain('simple-song.gp6');
+      expect(result.filepath).toContain('simple-song.gpx');
       expect(result.song.info.title).toBe('Simple Song');
       expect(result.song.tracks.length).toBe(1);
       expect(result.song.measureCount).toBe(2);
@@ -365,7 +365,7 @@ describe('File Handlers', () => {
       expect(measure.beats[2].notes[0].fret).toBe(3);
     });
 
-    it('should add .gp6 extension if not provided', async () => {
+    it('should add .gpx extension if not provided', async () => {
       const args = {
         filename: 'simple-no-ext',
         outputDirectory: testDir,
@@ -375,7 +375,7 @@ describe('File Handlers', () => {
 
       const result = await createSimpleGuitarProFile(args);
 
-      expect(result.filepath).toMatch(/\.gp6$/);
+      expect(result.filepath).toMatch(/\.gpx$/);
     });
 
     it('should handle multiple measures', async () => {

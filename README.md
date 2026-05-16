@@ -8,11 +8,11 @@
 [![pnpm](https://img.shields.io/badge/maintained%20with-pnpm-cc00ff.svg)](https://pnpm.io/)
 [![Code Style: Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
-A Model Context Protocol (MCP) server for generating Guitar Pro 6 files programmatically. This server provides tools for creating tablature files with full control over tracks, measures, beats, and notes.
+A Model Context Protocol (MCP) server for generating Guitar Pro files programmatically. This server provides tools for creating tablature files with full control over tracks, measures, beats, and notes.
 
 ## Features
 
-- 🎸 Generate Guitar Pro 6 (.gp6) files
+- 🎸 Generate Guitar Pro 6+ (.gpx) files
 - 🎵 Support for multiple tracks and instruments
 - 📝 Full control over measures, beats, and notes
 - 🎼 Time signatures, tempo changes, and key signatures
@@ -72,10 +72,10 @@ This is an MCP server that can be integrated with MCP clients. The server provid
 
 ### 1. create_guitar_pro_file
 
-Create a Guitar Pro 6 file with full control over all aspects of the composition.
+Create a Guitar Pro file with full control over all aspects of the composition.
 
 **Parameters:**
-- `filename` (string, required): Name of the output file (e.g., "my-song.gp6")
+- `filename` (string, required): Name of the output file (e.g., "my-song.gpx" or "my-song")
 - `outputDirectory` (string, optional): Custom output directory. Defaults to the Music folder
 - `title` (string, required): Song title
 - `artist` (string, optional): Artist name
@@ -110,7 +110,7 @@ Create a Guitar Pro 6 file with full control over all aspects of the composition
 **Example:**
 ```javascript
 {
-  filename: "my-song.gp6",
+  filename: "my-song.gpx",
   title: "My Guitar Song",
   artist: "Me",
   tempo: 120,
@@ -139,7 +139,7 @@ Create a Guitar Pro 6 file with full control over all aspects of the composition
 
 ### 2. create_simple_guitar_pro_file
 
-Create a simple Guitar Pro 6 file using an easy tablature format.
+Create a simple Guitar Pro file using an easy tablature format.
 
 **Parameters:**
 - `filename` (string, required): Name of the output file
@@ -152,7 +152,7 @@ Create a simple Guitar Pro 6 file using an easy tablature format.
 **Example:**
 ```javascript
 {
-  filename: "simple-riff.gp6",
+  filename: "simple-riff.gpx",
   title: "Simple Riff",
   tempo: 140,
   tablature: [
@@ -179,7 +179,7 @@ You can override this by providing a custom `outputDirectory` parameter.
 ```
 src/
 ├── models/          # Data models (Song, Track, Measure, Beat, Note)
-├── writers/         # GP6 file writer
+├── writers/         # GPX file writer
 ├── utils/           # Binary writer utilities
 ├── handlers/        # MCP tool handlers
 └── index.ts         # MCP server entry point
@@ -305,9 +305,9 @@ docs: update installation instructions
 
 ## Technical Details
 
-### Guitar Pro 6 Format
+### Guitar Pro Format
 
-This implementation focuses on Guitar Pro 6 (.gp6) compatibility. The format includes:
+This implementation focuses on Guitar Pro 6+ (.gpx) compatibility. The format includes:
 - Binary file structure with header identification
 - Song metadata (title, artist, album, etc.)
 - Track information (name, tuning, MIDI settings)
@@ -339,7 +339,7 @@ The project includes comprehensive unit tests with 97%+ coverage:
 - **147 tests** across 9 test suites
 - All models tested (Note, Beat, Measure, Track, Song)
 - Binary writer fully tested
-- GP6 writer tested with various song structures
+- GPX writer tested with various song structures
 - Handler integration tests
 - File I/O and error handling tests
 
@@ -369,7 +369,7 @@ ISC
 
 ## Guitar Pro Compatibility
 
-This server generates Guitar Pro 6 files. These files are compatible with:
+This server generates Guitar Pro files (.gpx format). These files are compatible with:
 - Guitar Pro 6 and later versions
 - Both Windows and macOS versions of Guitar Pro
 
