@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { GP6Writer, writeGP6File } from '../../src/writers/GP6Writer';
+import { GPXWriter, writeGPXFile } from '../../src/writers/GPXWriter';
 import { createSong, addTrackToSong } from '../../src/models/Song';
 import { createTrack, addMeasureToTrack } from '../../src/models/Track';
 import {
@@ -11,10 +11,10 @@ import {
 import { createBeat, addNoteToBeat, Duration } from '../../src/models/Beat';
 import { createNote } from '../../src/models/Note';
 
-describe('GP6Writer', () => {
+describe('GPXWriter', () => {
   describe('write', () => {
     it('should write a basic song to buffer', () => {
-      const writer = new GP6Writer();
+      const writer = new GPXWriter();
       const song = createSong('Test Song', 'Test Artist');
 
       const buffer = writer.write(song);
@@ -24,7 +24,7 @@ describe('GP6Writer', () => {
     });
 
     it('should write GP6 header', () => {
-      const writer = new GP6Writer();
+      const writer = new GPXWriter();
       const song = createSong('Test');
 
       const buffer = writer.write(song);
@@ -35,7 +35,7 @@ describe('GP6Writer', () => {
     });
 
     it('should write song with single track', () => {
-      const writer = new GP6Writer();
+      const writer = new GPXWriter();
       let song = createSong('Test Song');
       const track = createTrack('Guitar');
       song = addTrackToSong(song, track);
@@ -46,7 +46,7 @@ describe('GP6Writer', () => {
     });
 
     it('should write song with multiple tracks', () => {
-      const writer = new GP6Writer();
+      const writer = new GPXWriter();
       let song = createSong('Test Song');
 
       const guitar = createTrack('Guitar');
@@ -61,7 +61,7 @@ describe('GP6Writer', () => {
     });
 
     it('should write song with measures and notes', () => {
-      const writer = new GP6Writer();
+      const writer = new GPXWriter();
       let song = createSong('Test Song');
       let track = createTrack('Guitar');
 
@@ -81,7 +81,7 @@ describe('GP6Writer', () => {
     });
 
     it('should write song with time signature', () => {
-      const writer = new GP6Writer();
+      const writer = new GPXWriter();
       let song = createSong('Test Song');
       let track = createTrack('Guitar');
 
@@ -97,7 +97,7 @@ describe('GP6Writer', () => {
     });
 
     it('should write song with tempo changes', () => {
-      const writer = new GP6Writer();
+      const writer = new GPXWriter();
       let song = createSong('Test Song');
       let track = createTrack('Guitar');
 
@@ -113,7 +113,7 @@ describe('GP6Writer', () => {
     });
 
     it('should write song with multiple beats per measure', () => {
-      const writer = new GP6Writer();
+      const writer = new GPXWriter();
       let song = createSong('Test Song');
       let track = createTrack('Guitar');
 
@@ -136,7 +136,7 @@ describe('GP6Writer', () => {
     });
 
     it('should write song with chord (multiple notes per beat)', () => {
-      const writer = new GP6Writer();
+      const writer = new GPXWriter();
       let song = createSong('Test Song');
       let track = createTrack('Guitar');
 
@@ -158,7 +158,7 @@ describe('GP6Writer', () => {
     });
 
     it('should write song with different note durations', () => {
-      const writer = new GP6Writer();
+      const writer = new GPXWriter();
       let song = createSong('Test Song');
       let track = createTrack('Guitar');
 
@@ -190,7 +190,7 @@ describe('GP6Writer', () => {
     });
 
     it('should write song with dotted notes', () => {
-      const writer = new GP6Writer();
+      const writer = new GPXWriter();
       let song = createSong('Test Song');
       let track = createTrack('Guitar');
 
@@ -210,7 +210,7 @@ describe('GP6Writer', () => {
     });
 
     it('should write song with rest beats', () => {
-      const writer = new GP6Writer();
+      const writer = new GPXWriter();
       let song = createSong('Test Song');
       let track = createTrack('Guitar');
 
@@ -228,7 +228,7 @@ describe('GP6Writer', () => {
     });
 
     it('should write song with note effects', () => {
-      const writer = new GP6Writer();
+      const writer = new GPXWriter();
       let song = createSong('Test Song');
       let track = createTrack('Guitar');
 
@@ -249,7 +249,7 @@ describe('GP6Writer', () => {
     });
 
     it('should handle empty tracks', () => {
-      const writer = new GP6Writer();
+      const writer = new GPXWriter();
       let song = createSong('Test Song');
       const track = createTrack('Guitar'); // No measures
       song = addTrackToSong(song, track);
@@ -260,7 +260,7 @@ describe('GP6Writer', () => {
     });
 
     it('should handle multiple measures', () => {
-      const writer = new GP6Writer();
+      const writer = new GPXWriter();
       let song = createSong('Test Song');
       let track = createTrack('Guitar');
 
@@ -282,7 +282,7 @@ describe('GP6Writer', () => {
     });
   });
 
-  describe('writeGP6File', () => {
+  describe('writeGPXFile', () => {
     it('should write a song using convenience function', () => {
       let song = createSong('Test Song');
       let track = createTrack('Guitar');
@@ -296,18 +296,18 @@ describe('GP6Writer', () => {
       track = addMeasureToTrack(track, measure);
       song = addTrackToSong(song, track);
 
-      const buffer = writeGP6File(song);
+      const buffer = writeGPXFile(song);
 
       expect(buffer).toBeInstanceOf(Buffer);
       expect(buffer.length).toBeGreaterThan(0);
     });
 
-    it('should produce same output as GP6Writer', () => {
+    it('should produce same output as GPXWriter', () => {
       const song = createSong('Test Song');
 
-      const writer = new GP6Writer();
+      const writer = new GPXWriter();
       const buffer1 = writer.write(song);
-      const buffer2 = writeGP6File(song);
+      const buffer2 = writeGPXFile(song);
 
       // Both should produce valid buffers
       expect(buffer1.length).toBeGreaterThan(0);
@@ -357,7 +357,7 @@ describe('GP6Writer', () => {
       song = addTrackToSong(song, guitar);
       song = addTrackToSong(song, bass);
 
-      const buffer = writeGP6File(song);
+      const buffer = writeGPXFile(song);
 
       expect(buffer.length).toBeGreaterThan(100);
       expect(song.tracks.length).toBe(2);

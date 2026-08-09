@@ -27,7 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Initial release of Guitar Pro 6 MCP server
 - Two MCP tools: `create_guitar_pro_file` and `create_simple_guitar_pro_file`
 - Comprehensive test suite with 147 tests (80%+ coverage)
-- Binary writer utilities for GP6 format
+- Binary writer utilities for GPX format
 - Modular architecture with separated data models
 - TypeScript compilation via esbuild
 - ESLint and Prettier configuration

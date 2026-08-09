@@ -74,14 +74,14 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       {
         name: 'create_guitar_pro_file',
         description:
-          'Create a Guitar Pro 6 file with tablature data. Supports multiple tracks, measures, and notes. Files are saved to the Music folder by default.',
+          'Create a Guitar Pro file with tablature data. Supports multiple tracks, measures, and notes. Files are saved to the Music folder by default.',
         inputSchema: {
           type: 'object',
           properties: {
             filename: {
               type: 'string',
               description:
-                'Filename for the .gp6 file (e.g., "my-song.gp6"). Will be saved to the output directory.',
+                'Filename for the .gpx file (e.g., "my-song.gpx" or "my-song"). Will be saved to the output directory.',
             },
             outputDirectory: {
               type: 'string',
@@ -194,14 +194,14 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       {
         name: 'create_simple_guitar_pro_file',
         description:
-          'Create a simple Guitar Pro 6 file with a single track and basic tablature. Great for quick prototyping. Files are saved to the Music folder by default.',
+          'Create a simple Guitar Pro file with a single track and basic tablature. Great for quick prototyping. Files are saved to the Music folder by default.',
         inputSchema: {
           type: 'object',
           properties: {
             filename: {
               type: 'string',
               description:
-                'Filename for the .gp6 file (e.g., "my-song.gp6"). Will be saved to the output directory.',
+                'Filename for the .gpx file (e.g., "my-song.gpx" or "my-song"). Will be saved to the output directory.',
             },
             outputDirectory: {
               type: 'string',
@@ -264,7 +264,7 @@ async function handleCreateGuitarProFile(args: Record<string, unknown>) {
       content: [
         {
           type: 'text',
-          text: `Successfully created Guitar Pro 6 file!\n\nLocation: ${filepath}\nTracks: ${song.tracks.length}\nMeasures: ${song.measureCount}\nTempo: ${song.tempo} BPM\n\nYou can now open this file in Guitar Pro 6 or later.`,
+          text: `Successfully created Guitar Pro file!\n\nLocation: ${filepath}\nTracks: ${song.tracks.length}\nMeasures: ${song.measureCount}\nTempo: ${song.tempo} BPM\n\nYou can now open this file in Guitar Pro 6 or later.`,
         },
       ],
     };
@@ -294,7 +294,7 @@ async function handleCreateSimpleGuitarProFile(args: Record<string, unknown>) {
       content: [
         {
           type: 'text',
-          text: `Successfully created simple Guitar Pro 6 file!\n\nLocation: ${filepath}\nMeasures: ${song.measureCount}\nTempo: ${song.tempo} BPM\n\nYou can now open this file in Guitar Pro 6 or later.`,
+          text: `Successfully created simple Guitar Pro file!\n\nLocation: ${filepath}\nMeasures: ${song.measureCount}\nTempo: ${song.tempo} BPM\n\nYou can now open this file in Guitar Pro 6 or later.`,
         },
       ],
     };
