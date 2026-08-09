@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { promises as fs } from 'fs';
 import { join } from 'path';
-import { tmpdir } from 'os';
+import { tmpdir, platform, homedir } from 'os';
 import {
   getDefaultOutputDirectory,
   createGuitarProFile,
@@ -40,6 +40,55 @@ describe('File Handlers', () => {
       expect(dir.length).toBeGreaterThan(0);
       // Should contain some path separator
       expect(dir).toMatch(/[/\\]/);
+    });
+
+    it('should return platform-appropriate Music directory', () => {
+      const dir = getDefaultOutputDirectory();
+      const home = homedir();
+      const currentPlatform = platform();
+
+      if (currentPlatform === 'win32') {
+        // Windows: Should be like C:\Users\username\Music
+        expect(dir).toBe(join(home, 'Music'));
+        expect(dir).toMatch(/\\/);
+      } else if (currentPlatform === 'darwin') {
+        // macOS: Should be like /Users/username/Music
+        expect(dir).toBe(join(home, 'Music'));
+        expect(dir).toMatch(/\//);
+      } else if (currentPlatform === 'linux') {
+        // Linux: Should respect XDG_MUSIC_DIR or fallback to ~/Music
+        if (process.env.XDG_MUSIC_DIR) {
+          expect(dir).toBe(process.env.XDG_MUSIC_DIR);
+        } else {
+          expect(dir).toBe(join(home, 'Music'));
+        }
+      }
+    });
+
+    it('should respect XDG_MUSIC_DIR on Linux', () => {
+      // Only test this on Linux or when we can mock the platform
+      const currentPlatform = platform();
+      if (currentPlatform === 'linux') {
+        const originalXdgMusicDir = process.env.XDG_MUSIC_DIR;
+        const testMusicDir = '/home/testuser/CustomMusic';
+
+        // Set XDG_MUSIC_DIR
+        process.env.XDG_MUSIC_DIR = testMusicDir;
+
+        const dir = getDefaultOutputDirectory();
+        expect(dir).toBe(testMusicDir);
+
+        // Restore original value
+        if (originalXdgMusicDir) {
+          process.env.XDG_MUSIC_DIR = originalXdgMusicDir;
+        } else {
+          delete process.env.XDG_MUSIC_DIR;
+        }
+      } else {
+        // On non-Linux platforms, just verify it doesn't use XDG_MUSIC_DIR
+        const dir = getDefaultOutputDirectory();
+        expect(dir).toBe(join(homedir(), 'Music'));
+      }
     });
   });
 
